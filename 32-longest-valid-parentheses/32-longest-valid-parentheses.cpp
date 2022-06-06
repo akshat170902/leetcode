@@ -1,35 +1,16 @@
-
-class Solution
-{
-public: 
-    int longestValidParentheses(string s)
-    {
-        int left = 0, right = 0, maxlength = 0;
-        for (int i = 0; i < s.length(); i++) {
-            if (s[i] == '(') {
-                left++;
-            } else {
-                right++;
+class Solution {
+public:
+    int longestValidParentheses(string s) {
+        vector<int>dp(s.size()+1);
+        int ans=0;
+        for(int i=1;i<dp.size();i++){
+            if(i==1)continue;
+            
+            if(s[i-1]==')'&&i-dp[i-1]-2>=0&&s[i-dp[i-1]-2]=='('){
+                dp[i]=2+dp[i-dp[i-1]-2]+dp[i-1];
             }
-            if (left == right) {
-                maxlength = max(maxlength, 2 * right);
-            } else if (right >= left) {
-                left = right = 0;
-            }
+            ans=max(ans,dp[i]);
         }
-        left = right = 0;
-        for (int i = s.length() - 1; i >= 0; i--) {
-            if (s[i] == '(') {
-                left++;
-            } else {
-                right++;
-            }
-            if (left == right) {
-                maxlength = max(maxlength, 2 * left);
-            } else if (left >= right) {
-                left = right = 0;
-            }
-             }
-        return maxlength;
+        return ans;
     }
 };
