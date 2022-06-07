@@ -1,52 +1,31 @@
 class Solution {
 public:
     void merge(vector<int>& nums1, int m, vector<int>& nums2, int n) {
-        if(n==0){
-            return;
-        }
-        if(m==0){
-            for(int b=0;b<n;b++){
-                nums1[b]=nums2[b];
-                
+        int i=0,j=0;
+        while(i<m+n&&j<n){
+            if(nums1[i]<=nums2[j]){
+                 i++;
             }
-            return;
-        }
-        int i=0;
-            int j=0;
-        if(n==1){
-            for(int g=0;g<m;g++){
-                if(nums1[g]>nums2[0]){
-                     for(int k=m+n-2;k>=g;k--){
-                 nums1[k+1]=nums1[k];
-             }
-             nums1[g]=nums2[0];
-                    return;
+            else{
+                for(int id=nums1.size()-2;id>=i;id--){
+                    nums1[id+1]=nums1[id];
                 }
-            }
-            nums1[m]=nums2[0];
-        }
-        while(i-j!=m){
-        if(i==m+n||j==n){
-            return;
-        }
-           if(nums1[i]<=nums2[j]){
-                i++;
-            }
-         else {
-                
-             for(int k=m+n-2;k>=i;k--){
-                 nums1[k+1]=nums1[k];
-             }
-             nums1[i]=nums2[j];
-             j++;
-             i++;
+                nums1[i]=nums2[j];
+                // i++;
+                j++;
             }
         }
-           while (i<n+m){
-               nums1[i]=nums2[j];
-               i++;
-               j++;
-           }     
+        // i=j+i;
+        cout<<i<<" "<<j<<endl;
         
+        if(j<n){
+            i=i-n+j;
+            while(j<n){
+           
+           nums1[i]=nums2[j];
+           j++;
+           i++;
+       }
+    }
     }
 };
