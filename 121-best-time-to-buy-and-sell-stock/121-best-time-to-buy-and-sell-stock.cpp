@@ -1,23 +1,23 @@
 class Solution {
 public:
-    int rec(int idx,vector<int>&prices,int buy,vector<vector<int>>&dp){
-        if(idx==prices.size()){
-            return 0;
-        }
-        if(dp[idx][buy]!=-1)return dp[idx][buy];
+    
+    int maxProfit(vector<int>& prices) {
+        vector<int>cur(2,0),prev(2,0);
+        for(int idx=prices.size()-1;idx>=0;idx--){
+            for(int buy=0;buy<=1;buy++){
         int take=0,notTake=0;
         if(buy){
-            take=rec(idx+1,prices,0,dp)-prices[idx];
-            notTake=rec(idx+1,prices,1,dp);
+            take=prev[0]-prices[idx];
+            notTake=prev[1];
         }
         else{
             take=prices[idx];
-            notTake=rec(idx+1,prices,0,dp);
+            notTake=prev[0];
         }
-        return dp[idx][buy]= max(take,notTake);
-    }
-    int maxProfit(vector<int>& prices) {
-        vector<vector<int>>dp(prices.size(),vector<int>(2,-1));
-        return rec(0,prices,1,dp);
+        cur[buy]= max(take,notTake);
+            }
+            prev=cur;
+        }
+        return cur[1];
     }
 };
