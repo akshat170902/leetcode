@@ -1,31 +1,24 @@
 class Solution {
 public:
+    bool rec(string s1,string s2,string s3,int i,int j,int k,vector<vector<int>>&dp){
+        if(k==s3.size()&&i==s1.size()&&j==s2.size())return true;
+        if(i>s1.size()||j>s2.size())return false;
+        if(dp[i][j]!=-1)return dp[i][j];
+        if(s3[k]==s2[j]&&s3[k]==s1[i]){
+            return dp[i][j]= rec(s1,s2,s3,i+1,j,k+1,dp)||rec(s1,s2,s3,i,j+1,k+1,dp);
+        }
+        else if(s1[i]==s3[k]){
+            return dp[i][j]= rec(s1,s2,s3,i+1,j,k+1,dp);
+        }
+        else if(s3[k]==s2[j]){
+            return dp[i][j]= rec(s1,s2,s3,i,j+1,k+1,dp);
+        }
+        else{
+            return dp[i][j]= false;
+        }
+    }
     bool isInterleave(string s1, string s2, string s3) {
-        vector<int>cur(s2.size()+1,0),prev(s2.size()+1,0);
-        if(s3.size()!=s1.size()+s2.size()){
-            return false;
-        }
-        for(int i=s1.size();i>=0;i--){
-            for(int j=s2.size();j>=0;j--){
-                int k=i+j;
-                if(i==s1.size()&&j==s2.size()){
-                    cur[j]=1;
-                }
-                else if(s3[k]==s2[j]&&s3[k]==s1[i]){
-                    cur[j]= prev[j]||cur[j+1];
-                }
-                else if(s1[i]==s3[k]){
-                    cur[j]= prev[j];
-                }
-                else if(s3[k]==s2[j]){
-                    cur[j]= cur[j+1];
-                }
-                else{
-                    cur[j]= false;
-                }  
-            }
-            prev=cur;
-        }
-        return cur[0];
+        vector<vector<int>>dp(s1.size()+1,(vector<int>(s2.size()+1,-1)));
+        return rec(s1,s2,s3,0,0,0,dp);
     }
 };
