@@ -7,14 +7,10 @@ public:
                 j++;
             }
             else{
-                nums[i]=nums[j];
+                swap(nums[i],nums[j]);
                 i++;
                 j++;
-                
             }
-        }
-        for(i;i<nums.size();i++){
-            nums[i]=0;
         }
     }
 };
