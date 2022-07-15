@@ -6,11 +6,10 @@ public:
         }
         int ans=1;
         grid[i][j]=0;
-    int a=getArea(grid,i+1,j),b=getArea(grid,i-1,j),c=getArea(grid,i,j+1),d=getArea(grid,i,j-1);
-        if(a)ans+=a;
-        if(b)ans+=b;
-        if(c)ans+=c;
-        if(d)ans+=d;
+        ans+=getArea(grid,i+1,j);
+        ans+=getArea(grid,i-1,j);
+        ans+=getArea(grid,i,j+1);
+        ans+=getArea(grid,i,j-1);
         return ans;
     }
     int maxAreaOfIsland(vector<vector<int>>& grid) {
