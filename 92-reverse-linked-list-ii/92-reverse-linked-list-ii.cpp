@@ -10,37 +10,28 @@
  */
 class Solution {
 public:
-    void reverse(ListNode*l,ListNode*r){
-        
-        if(l==r)return;
-        ListNode*temp=l->next;
-        while(l!=r){
-            ListNode*p=temp->next;
-            temp->next=l;
-            l=temp;
-            temp=p;
-        }
-    }
-    ListNode* reverseBetween(ListNode* head, int left, int right) {
-         int lf=left;
-        ListNode*first=head,*f=head,*last=head,*l=head;
-        while(--left){
-            f=first;
-            first=first->next;
-        }
-        while(--right){
-            l=last;
-            last=last->next;
+    ListNode* reverseBetween(ListNode* head, int L, int R) {
+        ListNode*dummy=new ListNode(),*prev=dummy,*left=head,*right=head,*forw=head->next;
+        dummy->next=head;
+        int dif=(R-L);
+        while(--L){
+            prev=left;
+            left=forw;
+            right=forw;
+            forw=forw->next;
         }
         
-        l=last->next;
-        reverse(first,last);
-        if(lf==1){
-            head=last;
+        while(dif--){
+            // cout<<forw->val<<dif<<endl;
+            // if(forw)
+            ListNode*temp=forw->next;
+            forw->next=right;
+            right=forw;
+            // if(forw)
+            forw=temp;
         }
-        f->next=last;
-        first->next=l;
-        return head;
+        prev->next=right;
+        left->next=forw;
+        return dummy->next;
     }
-    
 };
