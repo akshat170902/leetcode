@@ -21,15 +21,14 @@ public:
             else{
                 s.push(p);
             }
-            
             p=p->next;
         }
-                while(!s.empty()){
-                    cout<<s.front()->val<<s.size()<<endl;
-                    prev->next=s.front();
-                    prev=prev->next;
-                    s.pop();
-                }
+        while(!s.empty()){
+            cout<<s.front()->val<<s.size()<<endl;
+            prev->next=s.front();
+            prev=prev->next;
+            s.pop();
+        }
         prev->next=nullptr;
         return dummy->next;
     }
