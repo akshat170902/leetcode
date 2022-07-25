@@ -2,28 +2,45 @@ class Solution {
 public:
     vector<vector<int>> threeSum(vector<int>& nums) {
         vector<vector<int>>ans;
+        int n=nums.size();
         sort(nums.begin(),nums.end());
-        unordered_map<int,int>m;
-        for(int i=0;i<nums.size();i++){
-            m[nums[i]]=i;
-        }
-        for(int i=0;i<nums.size();i++){
-            if(i>0&&nums[i]==nums[i-1]){
-                continue;
-            }
-            int tar=-1*nums[i];
-            for(int j=i+1;j<nums.size();j++){
-                if(j>i+1&&nums[j]==nums[j-1]){
+        
+        for(int i=0;i<n;i++){
+            // cout<<nums[i]<<endl;
+            if(i!=0&&nums[i]==nums[i-1]){
+                    
                     continue;
                 }
-                if(m.count(tar-nums[j])>0&&m[tar-nums[j]]>j){
-                    
-                    vector<int>cur;
-                    cur.push_back(-1*tar);
-                    cur.push_back(nums[j]);
-                    cur.push_back(tar-nums[j]);
-                    
-                    ans.push_back(cur);
+            
+            int tar=-1*nums[i];
+            int left=i+1,right=n-1;
+            
+            while(left<right){
+                // cout<<left<<right<<endl;
+                if(left!=i+1&&nums[left]==nums[left-1]){
+                    left++;
+                    continue;
+                }
+                else if(right!=n-1&&nums[right]==nums[right+1]){
+                    right--;
+                    continue;
+                }
+                else{
+                    if(nums[left]+nums[right]==tar){
+                        vector<int>v;
+                        v.push_back(nums[i]);
+                        v.push_back(nums[left]);
+                        v.push_back(nums[right]);
+                        ans.push_back(v);
+                        left++;
+                        right--;
+                    }
+                    else if(nums[left]+nums[right]<tar){
+                        left++;
+                    }
+                    else{
+                        right--;
+                    }
                 }
             }
         }
