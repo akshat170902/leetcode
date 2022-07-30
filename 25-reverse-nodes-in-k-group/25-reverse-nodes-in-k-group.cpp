@@ -10,29 +10,39 @@
  */
 class Solution {
 public:
-    ListNode*reverse_ll(ListNode*head,ListNode*tail){
-        ListNode*ptr=head->next;
-        ListNode*prev=head;
-        while(ptr!=tail){
-            ListNode*temp=ptr->next;
-            ptr->next=prev;
-            prev=ptr;
-            ptr=temp;
+    ListNode*reversell(ListNode*head,int k){
+        
+        ListNode*prev=nullptr;
+        
+        while(k--){
+            ListNode*temp=head->next;
+            head->next=prev;
+            prev=head;
+            head=temp;
         }
-        ListNode*ans=head->next;
-        head->next->next=tail;
-        head->next=prev;
-        return ans;
+        return prev;
     }
     ListNode* reverseKGroup(ListNode* head, int k) {
-        ListNode*tail=head,*dummy=new ListNode(-1),*dp=dummy;
+        ListNode*dummy=new ListNode(-1);
         dummy->next=head;
-        while(1){
+        ListNode*prev=dummy,*p=head;
+       
+        while(p){
+            ListNode*temp=prev->next;
+            bool flag=true;
             for(int i=0;i<k;i++){
-                if(tail==nullptr)return dummy->next;
-                tail=tail->next;
+                if(!p){
+                flag=false;
+                break;
+                }
+                p=p->next;
+                
             }
-            dp=reverse_ll(dp,tail);
+            if(!flag)break;
+            prev->next=reversell(prev->next,k);
+            temp->next=p;
+            prev=temp;
         }
+        return dummy->next;
     }
 };
