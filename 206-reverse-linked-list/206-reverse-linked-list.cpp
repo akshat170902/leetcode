@@ -14,10 +14,8 @@ public:
         if(head==nullptr)return nullptr;
         if(head->next==nullptr)return head;
         ListNode*rev=reverseList(head->next),*newn=rev;
-        while(rev->next){
-            rev=rev->next;
-        }
-        rev->next=head;
+        head->next->next=head;
+        
         head->next=nullptr;
         return newn;
         }
