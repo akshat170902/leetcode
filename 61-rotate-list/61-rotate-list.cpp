@@ -10,27 +10,30 @@
  */
 class Solution {
 public:
-    ListNode* rotateRight(ListNode* head, int n) {
-        if(head==nullptr)return head;
-        ListNode*temp=head,*p=head,*k=head;
-        int l=0;
-        while(temp){
-            l++;
-            temp=temp->next;
+    ListNode* rotateRight(ListNode* head, int k) {
+        if(!head||!head->next)return head;
+        int n=0;
+        for(ListNode*temp=head;temp;temp=temp->next){
+            n++;
         }
-        n=n%l;
-        if(n==0)return head;
-        while(n--){
-            k=k->next;
-            
+        k=k%n;
+        if(k==0){
+            return head;
         }
-        while(k->next){
-            k=k->next;
-            p=p->next;
+        else{
+            int dif=n-k-1;
+            ListNode*temp=head;
+            while(dif--){
+                temp=temp->next;
+            }
+            ListNode*ans=temp->next,*tra=ans;
+            temp->next=nullptr;
+            while(tra->next){
+                tra=tra->next;
+            }
+            tra->next=head;
+            head=ans;
         }
-        k->next=head;
-        head=p->next;
-        p->next=nullptr;
         return head;
     }
 };
