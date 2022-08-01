@@ -1,38 +1,29 @@
 class Solution {
 public:
-    void rec(int idx,int tar,vector<int>&c,vector<int>&cur,vector<vector<int>>&ans){
+    void rec(int idx,vector<int>&cur,vector<vector<int>>&ans,vector<int>&c,int tar){
+        int n=c.size();
+        if(idx>n||tar<0){
+            return ;
+        }
         if(tar==0){
             ans.push_back(cur);
-            return;
         }
-        if(idx==c.size()||tar<0){
-            return;
-        }
-        for(int i=idx;i<c.size();i++){
-            if(i==idx){
-                cur.push_back(c[i]);
-                rec(i+1,tar-c[i],c,cur,ans);
-                cur.pop_back();
-                
+        for(int i=idx;i<n;i++){
+            if(i!=idx&&c[i]==c[i-1]){
+                continue;
             }
-            else{
-                if(c[i]==c[i-1]){
-                    continue;
-                }
-                else{
-                    cur.push_back(c[i]);
-                    rec(i+1,tar-c[i],c,cur,ans);
-                    cur.pop_back();
-                }
-            }
+            cur.push_back(c[i]);
+            rec(i+1,cur,ans,c,tar-c[i]);
+            cur.pop_back();
+            // rec(i+1,cur,ans,c,tar);
         }
         
     }
-    vector<vector<int>> combinationSum2(vector<int>& c, int tar) {
-        vector<int>cur;
-        vector<vector<int>>ans;
+    vector<vector<int>> combinationSum2(vector<int>& c, int target) {
         sort(c.begin(),c.end());
-        rec(0,tar,c,cur,ans);
+        vector<vector<int>>ans;
+        vector<int>cur;
+        rec(0,cur,ans,c,target);
         return ans;
     }
 };
