@@ -1,20 +1,15 @@
 class Solution {
 public:
     int uniquePaths(int m, int n) {
-        m--;
-        n--;
-        if(m<n){
-            swap(n,m);
+        m--;n--;
+        
+        if(n<m){
+            swap(n,m);//taking least value in m variable
         }
-        long long int p=1;
-        long long int q=1;
-        for(int i=0;i<m;i++){
-            p*=(n+m-i);
-            q*=(m-i);
-            int gcd=__gcd(p,q);
-            p/=gcd;
-            q/=gcd;
+        double ans=1.0;
+        for(int i=1;i<=n;i++){
+            ans=(ans*(m+i)/i);
         }
-        return p/q;
+        return ans;
     }
 };
