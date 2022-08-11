@@ -12,8 +12,10 @@
 class Solution {
 public:
     bool isValidBST(TreeNode* root,long long low=-pow(2,32),long long high=pow(2,32)) {
-        if(!root)return true;
-        if(root->val<high&&root->val>low)return isValidBST(root->left,low,root->val)&&isValidBST(root->right,root->val,high);
+        if(!root)
+            return true;
+        if(root->val<high&&root->val>low)
+            return isValidBST(root->left,low,root->val)&&isValidBST(root->right,root->val,high);
         return false;
     }
 };
