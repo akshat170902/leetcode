@@ -1,19 +1,16 @@
 class Solution {
 public:
     bool isAnagram(string s, string t) {
-        int n=s.size(),m=t.size();
-        
-        if(n!=m){
+        if(s.size()!=t.size()){
             return false;
         }
-        
-        int salph[26]={0},talph[26]={0};
-        for(int i=0;i<n;i++){
-            salph[s[i]-'a']++;
-            talph[t[i]-'a']++;
+        unordered_map<char,int>m;
+        for(int i=0;i<s.size();i++){
+            m[s[i]]++;
+            m[t[i]]--;
         }
-        for(int i=0;i<26;i++){
-            if(salph[i]!=talph[i]){
+        for(auto it=m.begin();it!=m.end();it++){
+            if(it->second){
                 return false;
             }
         }
