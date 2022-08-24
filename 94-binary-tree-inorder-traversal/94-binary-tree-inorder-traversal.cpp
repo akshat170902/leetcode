@@ -11,34 +11,36 @@
  */
 class Solution {
 public:
-    TreeNode*RightFinder(TreeNode*cur,TreeNode*root){
-        // TreeNode*cur=root;
-        while(cur->right&&cur->right!=root){
-            cur=cur->right;
-        }
-        return cur;
-    }
     vector<int> inorderTraversal(TreeNode* root) {
-        TreeNode*cur=root;
-        vector<int>ans;
-        while(cur){
-            if(cur->left){
-                TreeNode*rightMost=RightFinder(cur->left,cur);
-                if(rightMost->right){
-                    ans.push_back(cur->val);
-                    rightMost->right=nullptr;
-                    cur=cur->right;
-                }
-                else{
-                    rightMost->right=cur;
-                    cur=cur->left;
-                }
+        
+            
+        stack<pair<TreeNode*,int>>s;
+        vector<int>inorder,preorder,postorder;
+        if(root)
+            s.push({root,1});
+        while(!s.empty()){
+            int val=s.top().second;
+            TreeNode*cur=s.top().first;
+            s.pop();
+            if(val==1){
+                preorder.push_back(cur->val);
+                val++;
+                s.push({cur,val});
+                if(cur->left)
+                    s.push({cur->left,1});
+            }
+            else if(val==2){
+                inorder.push_back(cur->val);
+                val++;
+                s.push({cur,val});
+                if(cur->right)
+                    s.push({cur->right,1});
             }
             else{
-                ans.push_back(cur->val);
-                cur=cur->right;
+                postorder.push_back(cur->val);
+                
             }
         }
-        return ans;
+        return inorder;
     }
 };
