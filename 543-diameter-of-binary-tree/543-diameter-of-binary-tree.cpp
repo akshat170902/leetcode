@@ -11,16 +11,20 @@
  */
 class Solution {
 public:
-    int height(TreeNode*root,int &ans){
-        if(root==nullptr)return 0;
-        int l=height(root->left,ans);
-        int r=height(root->right,ans);
-        ans=max(ans,l+r+1);
-        return max(l,r)+1;
+    int diameter(TreeNode*root,int &H){
+        if(root==nullptr)
+            return 0;
+        int l=0,r=0;
+        int d1=diameter(root->left,l);
+        int d2=diameter(root->right,r);
+        H=max(l,r)+1;
+        return max(l+r+1,max(d1,d2));
     }
     int diameterOfBinaryTree(TreeNode* root) {
-        int ans=0;
-        height(root,ans);
+        int leftH=0,rightH=0;
+       
+        int ans= diameter(root,leftH);
+        // cout<<leftH<<endl;
         return ans-1;
     }
 };
