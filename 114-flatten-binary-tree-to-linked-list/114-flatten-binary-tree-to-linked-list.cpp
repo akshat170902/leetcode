@@ -11,22 +11,26 @@
  */
 class Solution {
 public:
-    TreeNode*helper(TreeNode*&root){
-        if(root==nullptr)return nullptr;
-        if(root->right==nullptr&&root->left==nullptr)return root;
-        TreeNode*l=helper(root->left);
-        TreeNode*r=helper(root->right);
-        if(root->left){
-        TreeNode*temp=root->right;
+    TreeNode* flatten(TreeNode* root) {
+        if(root==nullptr)
+            return nullptr;
+        if(root->left==nullptr&&root->right==nullptr)
+            return root;
+        TreeNode*l=root->left;
+        TreeNode*r=root->right;
         
-        root->right=root->left;
-        root->left=nullptr;
+        TreeNode*lTail=flatten(root->left);
+        TreeNode*rTail=flatten(root->right);
         
-        l->right=temp;}
-        if(!r)return l;
-        return r;
-    }
-    void flatten(TreeNode* root) {
-        helper(root);
+        if(lTail){
+            
+            root->left=nullptr;
+            root->right=l;
+            lTail->right=r;
+            if(rTail)
+                return rTail;
+            return lTail;
+        }
+        return rTail;
     }
 };
