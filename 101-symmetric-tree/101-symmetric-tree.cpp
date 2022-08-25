@@ -11,15 +11,15 @@
  */
 class Solution {
 public:
-    bool isEqual(TreeNode*r,TreeNode*s){
-        if(r==nullptr&&s==nullptr)return true;
-        if(r==nullptr||s==nullptr)return false;
-        if(r->val==s->val){
-            return isEqual(r->left,s->right)&&isEqual(r->right,s->left);
+    bool isEqual(TreeNode*r1,TreeNode*r2){
+        if(!r1||!r2)
+            return r1==r2;
+        if(r1->val==r2->val){
+            return isEqual(r1->left,r2->right)&&isEqual(r1->right,r2->left);
         }
         return false;
     }
     bool isSymmetric(TreeNode* root) {
-       return isEqual(root->left,root->right);
+        return isEqual(root->left,root->right);
     }
 };
