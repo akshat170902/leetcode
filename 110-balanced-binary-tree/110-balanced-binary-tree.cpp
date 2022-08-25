@@ -11,20 +11,17 @@
  */
 class Solution {
 public:
-    bool helper(TreeNode*root,int &l){
-        if(root==nullptr)return true;
-        int lh=0,rh=0;
-       bool left= helper(root->left,lh);
-        bool right=helper(root->right,rh);
-        l=max(lh,rh)+1;
-        if(abs(lh-rh)>1){
-            return false;
-        }
-        return left&&right;
-        
+    bool Balanced(TreeNode*root,int& h){
+        if(!root)
+            return true;
+        int l=0,r=0;
+        bool leftB=Balanced(root->left,l);
+        bool rightB=Balanced(root->right,r);
+        h=max(l,r)+1;
+        return abs(l-r)<=1?leftB&&rightB:false;
     }
     bool isBalanced(TreeNode* root) {
-        int l=0;
-       return helper(root,l);
+        int h=0;
+        return Balanced(root,h);
     }
 };
