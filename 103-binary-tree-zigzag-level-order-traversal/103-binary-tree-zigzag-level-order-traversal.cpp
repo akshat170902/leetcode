@@ -12,38 +12,43 @@
 class Solution {
 public:
     vector<vector<int>> zigzagLevelOrder(TreeNode* root) {
+        stack<TreeNode*>s1,s2;
         vector<vector<int>>ans;
-        if(root==nullptr)return ans;
-        stack<TreeNode*>p,q;
         bool flag=true;
-        p.push(root);
-        
-        while(!p.empty()||!q.empty()){
-            vector<int>v;
+        if(root){
+            s1.push(root);
+        }
+        while(!s1.empty()||!s2.empty()){
+            vector<int>temp;
             if(flag){
-                int n=p.size();
+                int n=s1.size();
                 for(int i=0;i<n;i++){
-                    TreeNode*cur=p.top();
-                    p.pop();
-                    if(cur->left)q.push(cur->left);
-                    if(cur->right)q.push(cur->right);
-                    v.push_back(cur->val);
+                    TreeNode*p=s1.top();
+                    s1.pop();
+                    temp.push_back(p->val);
+                    if(p->left)
+                        s2.push(p->left);
+                    if(p->right)
+                        s2.push(p->right);
                     
                 }
+                flag=false;
             }
             else{
-                int n=q.size();
+                int n=s2.size();
                 for(int i=0;i<n;i++){
-                    TreeNode*cur=q.top();
-                    q.pop();
-                    if(cur->right)p.push(cur->right);
-                    if(cur->left)p.push(cur->left);
-                    v.push_back(cur->val);
-                   
+                    TreeNode*p=s2.top();
+                    s2.pop();
+                    temp.push_back(p->val);
+                    if(p->right)
+                        s1.push(p->right);
+                    if(p->left)
+                        s1.push(p->left);
+                    
                 }
+                flag=true;
             }
-             flag=!flag;
-            ans.push_back(v);
+            ans.push_back(temp);
         }
         return ans;
     }
