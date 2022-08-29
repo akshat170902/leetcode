@@ -1,51 +1,53 @@
+
 struct Node{
-int cnt, value, key;
-Node* next;
-Node* prev;
-
-Node(int _key, int _val){
-    key = _key;
-    value = _val;
-    cnt = 1;
-}
+    
+    int key,value,cnt;
+    Node*next;
+    Node*prev;
+    Node(int key,int value){
+        this->key=key;
+        this->value=value;
+        cnt=1;
+    }
 };
-
 struct Dll{
-int size;
-Node* head;
-Node* tail;
-
-Dll(){
-    head = new Node(-1, -1);
-    tail = new Node(-1, -1);
-    head->next = tail;
-    tail->prev = head;
-    size = 0;
-}
-
-void addFront(Node* node){
-    Node* temp = head->next;
     
-    node->next = temp;
-    node->prev = head;
+    int size;
+    Node*head;
+    Node*tail;
+    Dll(){
+        head=new Node(0,0);
+        tail=new Node(0,0);
+        head->next=tail;
+        tail->prev=head;
+        size=0;
+    }
+    void addFront(Node*node){
+        Node*temp=head->next;
+        head->next=node;
+        node->prev=head;
+        node->next=temp;
+        temp->prev=node;
+        size++;
+    }
+    void addBack(Node*node){
+        Node*temp=tail->prev;
+        temp->next=node;
+        node->prev=temp;
+        node->next=tail;
+        tail->prev=node;
+        size++;
+    }
     
-    head->next = node;
-    temp->prev = node;
-    
-    size++;
-}
-
-void deleteNode(Node* delnode){        
-    Node* delprev = delnode->prev;
-    Node* delnext = delnode->next;
-    
-    delprev->next = delnext;
-    delnext->prev = delprev;
-    
-    size--; 
-}    
+    void deleteNode(Node*node){
+        Node*tempNext=node->next;
+        Node*tempPrev=node->prev;
+        tempNext->prev=tempPrev;
+        tempPrev->next=tempNext;
+        
+        size--;
+    }
 };
-
 class LFUCache{
     unordered_map<int,Dll*>freqList;
     unordered_map<int,Node*>keyNode;
