@@ -11,20 +11,18 @@
  */
 class Solution {
 public:
-    void helper(TreeNode*root,int &ans,int tar){
-        if(root==nullptr)return ;
-        if(root->val>=tar){
-            ans++;
-            tar=root->val;
+    int good(TreeNode*&root,int maxAbove){
+        if(!root){
+            return 0;
         }
-        helper(root->left,ans,tar);
-        helper(root->right,ans,tar);
-        
-        
+        int ans=0;
+        if(maxAbove<=root->val){
+            maxAbove=root->val;
+            ans++;
+        }
+        return ans+good(root->left,maxAbove)+good(root->right,maxAbove);
     }
     int goodNodes(TreeNode* root) {
-        int ans=0;
-        helper(root,ans,root->val);
-        return ans;
+        return good(root,-1e5);
     }
 };
