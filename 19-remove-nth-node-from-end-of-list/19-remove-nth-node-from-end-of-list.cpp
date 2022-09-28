@@ -14,6 +14,7 @@ public:
         ListNode*dummy=new ListNode(-1);
         dummy->next=head;
         ListNode*prev=dummy,*forw=dummy;
+        
         while(n--){
             forw=forw->next;
         }
@@ -21,6 +22,7 @@ public:
             forw=forw->next;
             prev=prev->next;
         }
+        
         prev->next=prev->next->next;
         return dummy->next;
     }
