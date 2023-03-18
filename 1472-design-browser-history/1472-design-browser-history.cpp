@@ -1,41 +1,38 @@
 class BrowserHistory {
-    int idx;
-    int size;
-    vector<string>site;
+    vector<string>list;
+    int idx=-1;
+    int maxSize=0;
+    
 public:
     BrowserHistory(string homepage) {
+        list.push_back(homepage);
         idx=0;
-        size=0;
-        site.push_back(homepage);
+        maxSize=1;
     }
     
     void visit(string url) {
-        if(size<=idx){
-            if(site.size()==size+1){
-                site.push_back(url);
-                
-            }
-            else{
-                site[size+1]=url;
-            }
+        if(list.size()-1>idx){
+            list[idx+1]=url;
             idx++;
-            size++;
+            maxSize=idx+1;
         }
         else{
-            site[idx+1]=url;
-            size=idx+1;
+            list.push_back(url);
             idx++;
+            maxSize++;
         }
     }
     
     string back(int steps) {
-        idx=max(0,idx-steps);
-        return site[idx];
+        int val=min(steps,idx);
+        idx-=val;
+        return list[idx];
     }
     
     string forward(int steps) {
-        idx=min(size,idx+steps);
-        return site[idx];
+        int val=min(steps,maxSize-idx-1);
+        idx+=val;
+        return list[idx];
     }
 };
 
