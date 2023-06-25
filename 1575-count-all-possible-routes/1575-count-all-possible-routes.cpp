@@ -5,22 +5,21 @@ public:
     int rec(vector<int>&locations,int idx,int finish,int fuel){
         // cout<<idx<<" "<<fuel<<endl;
         int n=locations.size();
-        if(fuel<0){
-            return 0;
-        }
         int ans=0;
         if(idx==finish){
             ans++;
         }
-        
+        if(fuel==0){
+            return ans;
+        }
         if(m.count(idx)&&m[idx].count(fuel)){
             return m[idx][fuel];
         }
         
         for(int i=0;i<n;i++){
             if(idx!=i){
-                
-                ans=(ans+rec(locations,i,finish,fuel-abs(locations[idx]-locations[i])))%mod;
+                if(fuel>=abs(locations[idx]-locations[i]))
+                    ans=(ans+rec(locations,i,finish,fuel-abs(locations[idx]-locations[i])))%mod;
             }
         }
         return m[idx][fuel]=ans;
