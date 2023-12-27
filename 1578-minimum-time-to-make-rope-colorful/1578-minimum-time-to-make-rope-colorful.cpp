@@ -7,6 +7,7 @@ public:
                 char ch=colors[i];
                 int sum=0;
                 int maximum=0;
+                
                 while(colors[i]==ch){
                     sum+=T[i];
                     maximum=max(maximum,T[i]);
