@@ -2,6 +2,7 @@ class Solution {
 public:
     int minimumDifference(vector<int>& nums, int k) {
         set<int> prev;
+        int res=0;
         int n = nums.size();
         int minV = INT_MAX;
         for (int i = 0; i < n; i++){
@@ -12,11 +13,14 @@ public:
 
             for (int v : next)
                 minV = min(minV, abs(k - v));
-
+            
+            res=max(res,(int)prev.size());
             prev = next;
         }
+        cout<<res<<endl;
         for (int v : prev)
-                cout<<v<<endl;
+            for (int n : prev)
+                cout<<n<<endl;
         return minV;
     }
 };
