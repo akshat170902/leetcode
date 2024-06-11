@@ -15,6 +15,8 @@ public:
 
             prev = next;
         }
+        for (int v : prev)
+                cout<<v<<endl;
         return minV;
     }
 };
