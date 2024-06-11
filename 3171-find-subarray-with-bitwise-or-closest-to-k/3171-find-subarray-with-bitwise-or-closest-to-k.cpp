@@ -18,9 +18,7 @@ public:
             prev = next;
         }
         cout<<res<<endl;
-        for (int v : prev)
-            for (int n : prev)
-                cout<<n<<endl;
+        
         return minV;
     }
 };
